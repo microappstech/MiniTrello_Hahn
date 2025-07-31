@@ -1,0 +1,6 @@
+@MiniTrello_Hahn.API_HostAddress = http://localhost:5098
+
+GET {{MiniTrello_Hahn.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
