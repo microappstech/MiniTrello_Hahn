@@ -25,7 +25,7 @@ It follows best practices including validation, domain events, Swagger documenta
 
 ### Prerequisites
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download)
 - [Node.js & npm](https://nodejs.org/)
 - [Docker](https://www.docker.com/)
 
