@@ -11,7 +11,7 @@ namespace MiniTrello_Hahn.Application.Boards.Commands
     {
         public CreateBoardCommandValidator()
         {
-            RuleFor(x => x.dtoBoard.Name)
+            RuleFor(x => x.dtoBoard.Title)
                 .NotEmpty().WithMessage("Board name is required.")
                 .MaximumLength(100).WithMessage("Board name must be under 100 characters.");
             

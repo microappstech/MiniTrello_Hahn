@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniTrello_Hahn.Application.DTOs
+namespace MiniTrello_Hahn.Domain.Interfaces
 {
-    public class CreateBoardDto
+    public interface IDomainEvent
     {
-        public string Title { get; set; }
+        DateTime OccurredOn { get; }
     }
 }

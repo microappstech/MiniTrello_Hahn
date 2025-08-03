@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MiniTrello_Hahn.Domain.Common;
+using MiniTrello_Hahn.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,15 @@ using System.Threading.Tasks;
 
 namespace MiniTrello_Hahn.Domain.Events
 {
-    internal class BoardCreatedEvent
+    public class BoardCreatedEvent:DomainEvent
     {
+        public Board Board { get; }
+
+
+        public BoardCreatedEvent(Board board)
+        {
+            Board = board;
+        }
+
     }
 }

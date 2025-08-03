@@ -21,8 +21,8 @@ namespace MiniTrello_Hahn.Application.Boards.Commands
         }
         public async Task<Guid> Handle(CreateBoardCommand request, CancellationToken cancellationToken)
         {
-            var board = _mapper.Map<Board>(request.dtoBoard);
-            board.Id = Guid.NewGuid();
+            var board = Board.Create(request.dtoBoard.Title);
+
 
             await _unitOfWork.Boards.AddAsync(board);
             await _unitOfWork.SaveAsync();

@@ -28,5 +28,11 @@ namespace MiniTrello_Hahn.API.Controllers
             var boards = await _mediator.Send(new GetAllBoardsQuery());
             return Ok(boards);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBoard(Guid id)
+        {
+
+            return Ok();
+        }
     }
 }
