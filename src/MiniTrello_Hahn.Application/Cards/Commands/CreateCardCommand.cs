@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniTrello_Hahn.Application.Boards.Commands
+namespace MiniTrello_Hahn.Application.Cards.Commands
 {
-    public record CreateBoardCommand(DTOs.BoardDto dtoBoard) : IRequest<Guid>;
+    public record CreateCardCommand(DTOs.CreateCardDto createCardDto) : IRequest<Guid>;
    
     
 }

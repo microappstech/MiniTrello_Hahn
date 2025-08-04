@@ -55,9 +55,25 @@ namespace MiniTrello_Hahn.Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BoardList>()
+                .HasOne(i => i.Board)
+                .WithMany(i => i.Lists)
+                .HasForeignKey(i=>i.BoardId)
+                .HasPrincipalKey(i=>i.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Card>()
+                .HasOne(i => i.BoardList)
+                .WithMany(i => i.Cards)
+                .HasForeignKey(i => i.ListId)
+                .HasPrincipalKey(i => i.Id);
+
+
+
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<Board> Boards { get; set; }
+        public DbSet<BoardList> BoardLists { get; set; }
         public DbSet<Card> Cards { get; set; }
          
     }

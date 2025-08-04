@@ -42,7 +42,7 @@ export function BoardSelector({ boards, selectedBoard, onBoardSelect }: BoardSel
             >
               <div className="font-medium">{board.name}</div>
               <div className="text-sm text-gray-500">
-                {board.lists?.length} lists • {board.lists?.reduce((acc, list) => acc + list.cards.length, 0)} cards
+                {board.lists?.length} lists • {board.lists?.reduce((acc, list) => acc + list.cards?.length, 0)} cards
               </div>
             </DropdownMenuItem>
           ))}

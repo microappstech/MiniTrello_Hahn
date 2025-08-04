@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniTrello_Hahn.Application.Cards.Commands
+namespace MiniTrello_Hahn.Application.Boards.Queries
 {
-    internal class AddCardToListCommand
-    {
-    }
+    //internal class GetBoardByIdQuery
+    //{
+    //}
 }

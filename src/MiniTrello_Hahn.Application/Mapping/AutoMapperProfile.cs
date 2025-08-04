@@ -13,8 +13,11 @@ namespace MiniTrello_Hahn.Application.Mapping
     {
         public AutoMapperProfile()
         {
-            CreateMap<CreateBoardDto, Board>();
             CreateMap<Board, BoardDto>();
+            CreateMap<Board, BoardDto>();
+            CreateMap<MiniTrello_Hahn.Domain.Entities.BoardList, BoardListDto>();
+            CreateMap<Card, CardDto>();
+
             
                 //.ForMember(dest => dest.Lists, opt => opt.MapFrom(src =>
                 //src.Lists.Select(l => new BoardListDto

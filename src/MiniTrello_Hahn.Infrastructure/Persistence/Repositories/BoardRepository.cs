@@ -24,7 +24,30 @@ namespace MiniTrello_Hahn.Infrastructure.Persistence.Repositories
         }
         public async Task<IEnumerable<Board>> GetAllAsync()
         {
-            return await _context.Boards.ToListAsync();
+            return await _context.Boards
+                .Include(b => b.Lists)
+                .ThenInclude(l => l.Cards)
+                     .AsNoTracking()
+                     .Select(board => new Board
+                     {
+                         Id = board.Id,
+                         Name = board.Name,
+                         CreatedAt = board.CreatedAt,
+                         Lists = board.Lists.Select(list => new BoardList
+                         {
+                             Id = list.Id,
+                             Title = list.Title,
+                             Cards = list.Cards.Select(card => new Card
+                             {
+                                 Id = card.Id,
+                                 Title = card.Title,
+                                 Description = card.Description,
+                                 CreatedAt = card.CreatedAt
+                             }).ToList()
+                         }).ToList()
+                     })
+                     .ToListAsync();
+
         }
     }
 }

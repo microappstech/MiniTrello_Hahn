@@ -2,7 +2,10 @@
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using MiniTrello_Hahn.Application.BoardList.Commands;
+using MiniTrello_Hahn.Application.BoardList.Queries;
 using MiniTrello_Hahn.Application.Boards.Commands;
+using MiniTrello_Hahn.Application.Cards.Commands;
 using MiniTrello_Hahn.Application.Mapping;
 using MiniTrello_Hahn.Domain.Interfaces;
 using MiniTrello_Hahn.Infrastructure.Data;
@@ -29,9 +32,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(CreateBoardCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(CreateBoardListCommand).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(CreateCardCommand).Assembly);
 });
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+builder.Services.AddValidatorsFromAssembly(typeof(CreateCardCommandValidator).Assembly);
 builder.Services.AddValidatorsFromAssembly(typeof(CreateBoardCommandValidator).Assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(CreateBoardListCommandValidator).Assembly);
 builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

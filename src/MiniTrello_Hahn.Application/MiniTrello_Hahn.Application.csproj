@@ -16,8 +16,4 @@
     <ProjectReference Include="..\MiniTrello_Hahn.Domain\MiniTrello_Hahn.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>

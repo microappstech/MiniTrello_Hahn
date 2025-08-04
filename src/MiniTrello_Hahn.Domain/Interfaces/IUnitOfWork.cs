@@ -9,6 +9,8 @@ namespace MiniTrello_Hahn.Domain.Interfaces
     public interface IUnitOfWork
     {
         IBoardRepository Boards { get; }
+        ICardRepository Cards { get; }
+        IBoardListRepository BoardLists { get; }
         Task SaveAsync();
     }
 }
