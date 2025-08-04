@@ -17,7 +17,7 @@ export function BoardSelector({ boards, selectedBoard, onBoardSelect }: BoardSel
   return (
     <div className="flex items-center gap-4 mb-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">{selectedBoard ? selectedBoard.title : "Select a Board"}</h1>
+        <h1 className="text-2xl font-bold text-gray-900">{selectedBoard ? selectedBoard.name : "Select a Board"}</h1>
         {selectedBoard && (
           <p className="text-gray-600 flex items-center gap-1">
             <Calendar className="h-4 w-4" />
@@ -40,9 +40,9 @@ export function BoardSelector({ boards, selectedBoard, onBoardSelect }: BoardSel
               onClick={() => onBoardSelect(board)}
               className="flex flex-col items-start p-3"
             >
-              <div className="font-medium">{board.title}</div>
+              <div className="font-medium">{board.name}</div>
               <div className="text-sm text-gray-500">
-                {board.lists.length} lists • {board.lists.reduce((acc, list) => acc + list.cards.length, 0)} cards
+                {board.lists?.length} lists • {board.lists?.reduce((acc, list) => acc + list.cards.length, 0)} cards
               </div>
             </DropdownMenuItem>
           ))}

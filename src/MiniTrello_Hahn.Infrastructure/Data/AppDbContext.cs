@@ -13,9 +13,14 @@ namespace MiniTrello_Hahn.Infrastructure.Data
 { 
     public class AppDbContext:DbContext
     {
-        private readonly IMediator _mediator;
+        private readonly IMediator? _mediator;
 
         public AppDbContext(IMediator mediator, DbContextOptions<AppDbContext> options) : base(options)
+        {
+            _mediator = mediator;
+        }
+        public AppDbContext(DbContextOptions<AppDbContext> options, IMediator? mediator = null)
+        : base(options)
         {
             _mediator = mediator;
         }

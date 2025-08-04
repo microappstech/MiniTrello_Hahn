@@ -1,12 +1,12 @@
 import { Board } from "../models/types";
 
 
-// Mock service - replace with actual API calls
+const API_URL="https://localhost:44379/api"
 class BoardService {
   private mockBoards: Board[] = [
     {
       id: "1",
-      title: "Project Management Board",
+      name: "Project Management Board",
       createdAt: "2024-01-15T10:00:00Z",
       lists: [
         {
@@ -58,7 +58,7 @@ class BoardService {
     },
     {
       id: "2",
-      title: "Marketing Campaign",
+      name: "Marketing Campaign",
       createdAt: "2024-01-20T14:30:00Z",
       lists: [
         {
@@ -103,7 +103,7 @@ class BoardService {
     },
     {
       id: "3",
-      title: "Bug Tracking",
+      name: "Bug Tracking",
       createdAt: "2024-01-25T09:15:00Z",
       lists: [
         {
@@ -166,16 +166,25 @@ class BoardService {
   //     setTimeout(() => resolve(mockBoards), 500);
   //   });
 
-  async fetchBoards(): Promise<Board[]> {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500))
 
-    // In a real application, this would be an API call:
-    // const response = await fetch('/api/boards')
-    // return response.json()
 
-    return this.mockBoards
+
+
+async fetchBoards(): Promise<Board[]> {
+  
+  const response = await fetch("https://localhost:44379/api/boards");
+
+  if (!response.ok) {
+    console.error(`Failed to fetch boards, status: ${response.status}`);
+    throw new Error(`Failed to fetch boards, status: ${response.status}`);
   }
+
+  const data: Board[] = await response.json();
+  console.log("Fetched boards:", data);
+  return data;
+}
+
+
 
   async fetchBoardById(id: string): Promise<Board | null> {
     await new Promise((resolve) => setTimeout(resolve, 300))

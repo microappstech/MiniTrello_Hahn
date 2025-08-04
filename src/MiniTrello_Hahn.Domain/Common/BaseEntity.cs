@@ -10,6 +10,7 @@ namespace MiniTrello_Hahn.Domain.Common
     public class BaseEntity
     {
         public Guid Id { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         private List<object> _domainEvents;
         public IReadOnlyCollection<object> DomainEvents => _domainEvents?.AsReadOnly();
 

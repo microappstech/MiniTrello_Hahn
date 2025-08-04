@@ -136,11 +136,9 @@ export function KanbanBoard() {
       })
     }
 
-    // Update the board in the service (persist changes)
     if (selectedBoard) {
       try {
         await boardService.updateBoard(selectedBoard)
-        // Update the boards array with the updated board
         setBoards((prev) => prev.map((board) => (board.id === selectedBoard.id ? selectedBoard : board)))
       } catch (error) {
         console.error("Failed to update board:", error)
@@ -183,7 +181,7 @@ export function KanbanBoard() {
           onDragEnd={handleDragEnd}
         >
           <div className="flex gap-6 overflow-x-auto pb-4">
-            {selectedBoard.lists.map((list) => (
+            {selectedBoard.lists?.map((list) => (
               <BoardListComponent key={list.id} list={list} />
             ))}
           </div>

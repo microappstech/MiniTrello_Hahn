@@ -1,6 +1,6 @@
 export interface Board {
   id: string
-  title: string
+  name: string
   createdAt: string
   lists: BoardList[]
 }
