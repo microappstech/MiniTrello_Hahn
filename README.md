@@ -35,7 +35,7 @@ It follows best practices including validation, domain events, Swagger documenta
 
 ### Clone the Repository
 
-```bash
+
 git clone [https://github.com/microappstech/MiniTrello_Hahn](https://github.com/microappstech/MiniTrello_Hahn).git
 cd MiniTrello_Hahn
 
