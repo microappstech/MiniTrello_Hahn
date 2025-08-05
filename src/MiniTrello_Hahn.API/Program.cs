@@ -1,5 +1,7 @@
-﻿using FluentValidation;
+﻿using Azure.Core;
+using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using MiniTrello_Hahn.Application.BoardList.Commands;
@@ -10,6 +12,7 @@ using MiniTrello_Hahn.Application.Mapping;
 using MiniTrello_Hahn.Domain.Interfaces;
 using MiniTrello_Hahn.Infrastructure.Data;
 using MiniTrello_Hahn.Infrastructure.Persistence.Repositories;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +50,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
@@ -61,5 +65,25 @@ app.UseCors("AllowAllOrigins");
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Request.EnableBuffering();
+
+        // Set the stream position to 0 before reading
+        context.Request.Body.Position = 0;
+
+        using var reader = new StreamReader(context.Request.Body, Encoding.UTF8, detectEncodingFromByteOrderMarks: false, leaveOpen: true);
+        var body = await reader.ReadToEndAsync();
+
+        // Reset the position for further reading by model binder
+        context.Request.Body.Position = 0;
+        context.Response.StatusCode = 500;
+        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+        Console.WriteLine(exception?.ToString());
+        await context.Response.WriteAsync("Something went wrong.");
+    });
+});
 
 app.Run();

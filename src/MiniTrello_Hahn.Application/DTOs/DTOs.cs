@@ -34,8 +34,8 @@ namespace MiniTrello_Hahn.Application.DTOs
     }
     public class CreateCardDto
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         public Guid ListId { get; set; }
     }
     public class CardDto

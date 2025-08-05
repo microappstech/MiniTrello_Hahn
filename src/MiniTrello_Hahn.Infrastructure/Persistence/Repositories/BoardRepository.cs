@@ -37,6 +37,7 @@ namespace MiniTrello_Hahn.Infrastructure.Persistence.Repositories
                          {
                              Id = list.Id,
                              Title = list.Title,
+                             BoardId = list.BoardId,
                              Cards = list.Cards.Select(card => new Card
                              {
                                  Id = card.Id,

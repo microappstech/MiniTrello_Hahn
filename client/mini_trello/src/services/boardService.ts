@@ -154,16 +154,18 @@ class BoardService {
       ],
     },
   ]
-  async createCard(dto: CreateCardDto) {
+ async createCard(dto: CreateCardDto) {
   try {
-    const response = await fetch("/api/Card", {
+    console.log("Sending to API:", { createCardDto: dto });
+
+    const response = await fetch(API_URL + "/Card", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(dto),
+      body: JSON.stringify({ createCardDto: dto }),
     });
-    return await response.json();
+    
     if (!response.ok) {
       throw new Error("Failed to create card");
     }
@@ -175,9 +177,8 @@ class BoardService {
 }
 
   async fetchBoards(): Promise<Board[]> {
-  return this.mockBoards;
-  const response = await fetch("https://localhost:44379/api/boards");
-
+  // return this.mockBoards;  
+  const response = await fetch(API_URL+"/boards");
   if (!response.ok) {
     console.error(`Failed to fetch boards, status: ${response.status}`);
     throw new Error(`Failed to fetch boards, status: ${response.status}`);

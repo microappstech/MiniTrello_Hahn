@@ -32,11 +32,12 @@ export function KanbanBoard() {
     }),
   )
 
-  useEffect(() => {
+  
     const loadBoards = async () => {
       try {
         setLoading(true)
         const data = await boardService.fetchBoards()
+        console.log("Fetched boards:", data)
         setBoards(data)
         if (data.length > 0) {
           setSelectedBoard(data[0]) // Select first board by default
@@ -48,6 +49,7 @@ export function KanbanBoard() {
       }
     }
 
+  useEffect(() => {
     loadBoards()
   }, [])
 
@@ -167,7 +169,7 @@ export function KanbanBoard() {
   if (!selectedBoard) return;
 
   const newCard: CreateCardDto = {
-    title,
+    title: title,
     description,
     listId,
   };
@@ -175,34 +177,7 @@ export function KanbanBoard() {
   try {
     await boardService.createCard(newCard);
     alert("Card created successfully");
-
-    // Reset form
-    // setTitle("");
-    // setDescription("");
-
-    // Update UI locally
-    setSelectedBoard((prev) => {
-      if (!prev) return prev;
-
-      const updatedLists = prev.lists.map((list) => {
-        if (list.id === listId) {
-          return {
-            ...list,
-            cards: [...list.cards, { ...newCard }],
-          };
-        }
-        return list;
-      });
-
-      const updatedBoard = { ...prev, lists: updatedLists };
-
-      // Optionally persist the updated board to local storage or server
-      boardService.updateBoard(updatedBoard).catch((error) => {
-        console.error("Failed to update board:", error);
-      });
-
-      return updatedBoard;
-    });
+    await loadBoards();
   } catch (error) {
     console.error("Create card error:", error);
     alert("Failed to create card");

@@ -17,6 +17,10 @@ namespace MiniTrello_Hahn.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCard([FromBody] CreateCardCommand command)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var boardId = await _mediator.Send(command);
             return CreatedAtAction(nameof(CreateCard), new { id = boardId }, null);
         }
