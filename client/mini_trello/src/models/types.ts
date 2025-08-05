@@ -4,7 +4,11 @@ export interface Board {
   createdAt: string
   lists: BoardList[]
 }
-
+export interface CreateCardDto {
+  title: string;
+  description: string;
+  listId: string;
+}
 export interface Card {
   id: string
   title: string

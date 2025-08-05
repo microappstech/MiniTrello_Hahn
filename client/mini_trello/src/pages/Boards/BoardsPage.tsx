@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import type { Board, Card, BoardList } from "../../models/types"
+import type { Board, Card, BoardList, CreateCardDto } from "../../models/types"
 import { BoardListComponent } from "../../components/board-list"
 import { BoardSelector } from "../../components/board-selector"
 import { boardService } from "../../services/boardService"
@@ -136,6 +136,8 @@ export function KanbanBoard() {
       })
     }
 
+
+
     if (selectedBoard) {
       try {
         await boardService.updateBoard(selectedBoard)
@@ -161,6 +163,52 @@ export function KanbanBoard() {
     return selectedBoard.lists.find((list) => list.id === listId)
   }
 
+  const handleAddCard = async (listId: string, title: string, description: string) => {
+  if (!selectedBoard) return;
+
+  const newCard: CreateCardDto = {
+    title,
+    description,
+    listId,
+  };
+
+  try {
+    await boardService.createCard(newCard);
+    alert("Card created successfully");
+
+    // Reset form
+    // setTitle("");
+    // setDescription("");
+
+    // Update UI locally
+    setSelectedBoard((prev) => {
+      if (!prev) return prev;
+
+      const updatedLists = prev.lists.map((list) => {
+        if (list.id === listId) {
+          return {
+            ...list,
+            cards: [...list.cards, { ...newCard }],
+          };
+        }
+        return list;
+      });
+
+      const updatedBoard = { ...prev, lists: updatedLists };
+
+      // Optionally persist the updated board to local storage or server
+      boardService.updateBoard(updatedBoard).catch((error) => {
+        console.error("Failed to update board:", error);
+      });
+
+      return updatedBoard;
+    });
+  } catch (error) {
+    console.error("Create card error:", error);
+    alert("Failed to create card");
+  }
+};
+  
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -182,7 +230,7 @@ export function KanbanBoard() {
         >
           <div className="flex gap-6 overflow-x-auto pb-4">
             {selectedBoard.lists?.map((list) => (
-              <BoardListComponent key={list.id} list={list} />
+              <BoardListComponent key={list.id} list={list} onAddCard={handleAddCard} />
             ))}
           </div>
 

@@ -1,11 +1,11 @@
-import { Board } from "../models/types";
+import { Board, CreateCardDto } from "../models/types";
 
 
 const API_URL="https://localhost:44379/api"
 class BoardService {
   private mockBoards: Board[] = [
     {
-      id: "1",
+      id: "thisisid1",
       name: "Project Management Board",
       createdAt: "2024-01-15T10:00:00Z",
       lists: [
@@ -154,24 +154,28 @@ class BoardService {
       ],
     },
   ]
+  async createCard(dto: CreateCardDto) {
+  try {
+    const response = await fetch("/api/Card", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dto),
+    });
+    return await response.json();
+    if (!response.ok) {
+      throw new Error("Failed to create card");
+    }
+  } catch (error) {
 
-  
-  // async fetchBoards(): Promise<Board[]> {
-  //   // const response = await fetch(API_URL);
-  //   // if (!response.ok) {
-  //   //   throw new Error("Failed to fetch boards");
-  //   // }
-  //   // return response.json();
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => resolve(mockBoards), 500);
-  //   });
+    console.error("Failed to create card", error);
+    throw error;
+  }
+}
 
-
-
-
-
-async fetchBoards(): Promise<Board[]> {
-  
+  async fetchBoards(): Promise<Board[]> {
+  return this.mockBoards;
   const response = await fetch("https://localhost:44379/api/boards");
 
   if (!response.ok) {
